@@ -1,42 +1,50 @@
-import { describe, it, expect, beforeEach } from 'vitest';
-import { Test, TestingModule } from '@nestjs/testing';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { UsersService } from './users.service';
+import { User } from './entities/user.entity';
 
 describe('UsersService', () => {
   let usersService: UsersService;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [UsersService],
-    }).compile();
+  const userRepository = {
+    find: vi.fn(),
+  };
 
-    usersService = module.get<UsersService>(UsersService);
+  beforeEach(() => {
+    vi.clearAllMocks();
+
+    usersService = new UsersService(userRepository as any);
   });
 
   it('deve criar o UsersService', () => {
     expect(usersService).toBeDefined();
   });
 
-  it('deve retornar uma lista de usuários', () => {
-    const users = usersService.getUsers();
+  it('deve buscar os usuários no repository', async () => {
+    const users: User[] = [
+      {
+        id: 1,
+        name: 'Jhon',
+        email: 'jhon@example.com',
+        passwordHash: 'hash',
+        birthDate: new Date('2001-09-21'),
+        height: 171,
+      },
+    ];
 
-    expect(Array.isArray(users)).toBe(true);
+    userRepository.find.mockResolvedValue(users);
+
+    const result = await usersService.getUsers();
+
+    expect(result).toEqual(users);
+    expect(userRepository.find).toHaveBeenCalledTimes(1);
   });
 
-  it('deve retornar 3 usuários', () => {
-    const users = usersService.getUsers();
+  it('deve retornar uma lista vazia quando não existem usuários', async () => {
+    userRepository.find.mockResolvedValue([]);
 
-    expect(users).toHaveLength(3);
+    const result = await usersService.getUsers();
+
+    expect(result).toEqual([]);
+    expect(userRepository.find).toHaveBeenCalledTimes(1);
   });
-
-it('deve retornar os dados esperados do primeiro usuário', () => {
-  const users = usersService.getUsers();
-
-  expect(users[0]).toEqual({
-    id: 1,
-    name: 'Jhon',
-    email: 'jhon@example.com',
-  });
-});
-
 });
