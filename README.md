@@ -1,114 +1,319 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# MoveUp API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend da aplicação **MoveUp**, uma plataforma de treinos voltada para exercícios em casa.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+O projeto está sendo desenvolvido como uma aplicação Full Stack, começando pela construção da API REST com **NestJS, TypeScript, TypeORM e MySQL**.
 
-## Description
+O objetivo é criar uma base sólida para, posteriormente, implementar recursos como gerenciamento de treinos, histórico de atividades, adaptação dos treinos e integração com o frontend.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## 🎯 Objetivo
 
-```bash
-$ npm install
+O MoveUp tem como proposta auxiliar usuários a organizarem e acompanharem seus treinos realizados em casa.
+
+Entre as funcionalidades planejadas estão:
+
+* Cadastro e gerenciamento de usuários
+* Autenticação
+* Cadastro de treinos
+* Organização de exercícios
+* Registro de treinos realizados
+* Histórico de atividades
+* Acompanhamento de evolução
+* Adaptação dos treinos de acordo com frequência e feedback do usuário
+* Sistema de lembretes
+* Futuramente, recursos relacionados à inteligência artificial
+
+> **Status:** o projeto está em desenvolvimento. As funcionalidades acima representam o planejamento do projeto e não necessariamente estão implementadas.
+
+---
+
+## 🛠️ Tecnologias
+
+### Backend
+
+* [Node.js](https://nodejs.org/)
+* [NestJS](https://nestjs.com/)
+* TypeScript
+* TypeORM
+* MySQL
+
+### Testes
+
+* Vitest
+
+### Desenvolvimento
+
+* Git
+* GitHub
+* Insomnia
+* MySQL Workbench
+* Visual Studio Code
+
+---
+
+## 🏗️ Arquitetura
+
+O backend utiliza uma arquitetura baseada na separação de responsabilidades do NestJS:
+
+```text
+Controller
+    ↓
+Service
+    ↓
+Repository
+    ↓
+Database
 ```
 
-## Compile and run the project
+### Controller
 
-```bash
-# development
-$ npm run start
+Responsável por receber as requisições HTTP e encaminhar as operações para o Service.
 
-# watch mode
-$ npm run start:dev
+### Service
 
-# production mode
-$ npm run start:prod
+Responsável pela lógica da aplicação e pela comunicação com o Repository.
+
+### Repository
+
+Responsável pela comunicação com o banco de dados através do TypeORM.
+
+### Database
+
+Banco de dados MySQL responsável pelo armazenamento persistente das informações.
+
+---
+
+## 👤 Usuários
+
+O primeiro módulo desenvolvido é o módulo de usuários.
+
+Atualmente, a entidade `User` possui informações como:
+
+* ID
+* Nome
+* E-mail
+* Senha armazenada como hash
+* Data de nascimento
+* Altura
+
+O gerenciamento de usuários está sendo desenvolvido de forma incremental, começando pela estrutura da entidade, Service e Controller.
+
+---
+
+## 🧪 Testes
+
+O projeto utiliza **Vitest** para testes unitários.
+
+Atualmente existem testes para:
+
+### UsersService
+
+* Criação do Service
+* Busca de usuários
+* Retorno de lista vazia
+* Criação de usuário
+
+### UsersController
+
+* Criação de usuário
+* Busca de usuários
+
+Os testes utilizam mocks para isolar as responsabilidades de cada camada.
+
+Exemplo do fluxo testado:
+
+```text
+Controller
+    ↓
+Mock do Service
+    ↓
+Resultado esperado
 ```
 
-## Run tests
+Para executar os testes:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm test
 ```
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## 🚀 Como executar o projeto
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### Pré-requisitos
+
+Antes de executar o projeto, tenha instalado:
+
+* Node.js
+* npm
+* MySQL
+* Git
+
+### 1. Clone o repositório
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+git clone https://github.com/Bfr-Jhon/MoveUp-api.git
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 2. Entre na pasta
 
-## Observability
+```bash
+cd MoveUp-api
+```
 
-In production applications, observability is essential for understanding how your system behaves, detecting issues early, and maintaining reliable performance.
+### 3. Instale as dependências
 
-[NestJS Observe](https://observe.nestjs.com) automatically instruments your NestJS application, giving you deep visibility into your system with minimal setup:
+```bash
+npm install
+```
 
-- **Distributed tracing:** Follow requests across services and understand how they flow through your system.
-- **Waterfall analysis:** Visualize request execution and identify slow operations, bottlenecks, and unexpected delays.
-- **Performance analysis:** Analyze application performance in real time and quickly pinpoint areas that need optimization.
-- **Metrics:** Track key application and infrastructure metrics to understand system health and performance trends.
-- **Logging:** Centralize and correlate logs with traces and other telemetry to make debugging easier.
-- **Error tracking:** Detect errors quickly and investigate their root causes with the surrounding context.
-- **SLA monitoring:** Track service-level objectives and identify when your application is approaching or exceeding defined thresholds.
-- **Alarms and alerts:** Set up alerts for critical errors, performance degradation, SLA violations, and other anomalies so your team can react quickly.
+### 4. Configure as variáveis de ambiente
 
-## Resources
+Crie um arquivo `.env` na raiz do projeto.
 
-Check out a few resources that may come in handy when working with NestJS:
+Exemplo:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Auto-instrument your application with [NestJS Observer](https://observer.nestjs.com). Distributed tracing, metrics, and logging made easy. Error tracking and performance monitoring for your NestJS applications.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```env
+DB_HOST=localhost
+DB_PORT=3306
+DB_USERNAME=seu_usuario
+DB_PASSWORD=sua_senha
+DB_DATABASE=moveup
+```
 
-## Support
+> Não versionar o arquivo `.env`. As credenciais devem permanecer apenas no ambiente local.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### 5. Execute o projeto
 
-## Stay in touch
+```bash
+npm run start:dev
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+A API ficará disponível localmente na porta configurada pelo projeto.
 
-## License
+---
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## 📂 Estrutura atual
+
+A estrutura principal do projeto segue o padrão de módulos do NestJS:
+
+```text
+src/
+├── users/
+│   ├── entities/
+│   │   └── user.entity.ts
+│   ├── users.controller.ts
+│   ├── users.service.ts
+│   ├── users.controller.spec.ts
+│   └── users.service.spec.ts
+│
+├── app.module.ts
+└── main.ts
+```
+
+A estrutura será expandida conforme novos módulos forem implementados.
+
+---
+
+## 🌿 Estratégia de desenvolvimento
+
+O desenvolvimento é organizado utilizando branches de feature.
+
+Exemplo:
+
+```text
+main
+ │
+ ├── feature/users-entity
+ │
+ ├── feature/auth
+ │
+ ├── feature/workouts
+ │
+ └── feature/workout-history
+```
+
+Cada funcionalidade é desenvolvida e testada em sua própria branch antes de ser integrada à `main`.
+
+Fluxo utilizado:
+
+```text
+Criar branch
+     ↓
+Desenvolver
+     ↓
+Testar
+     ↓
+Commit
+     ↓
+Push
+     ↓
+Merge na main
+     ↓
+Nova feature
+```
+
+---
+
+## 🗺️ Roadmap
+
+### Backend
+
+* [x] Estrutura inicial do projeto
+* [x] Configuração do NestJS
+* [x] Configuração do TypeORM
+* [x] Estrutura inicial de usuários
+* [x] Users Service
+* [x] Users Controller
+* [x] Testes unitários do Service
+* [x] Testes unitários do Controller
+* [ ] DTOs
+* [ ] Validação de dados
+* [ ] CRUD completo de usuários
+* [ ] Autenticação
+* [ ] Autorização
+* [ ] Módulo de exercícios
+* [ ] Módulo de treinos
+* [ ] Histórico de treinos
+* [ ] Sistema de evolução
+* [ ] Sistema de adaptação dos treinos
+* [ ] Lembretes
+
+### Frontend
+
+* [ ] Definição da interface
+* [ ] Tela inicial
+* [ ] Cadastro e login
+* [ ] Dashboard
+* [ ] Calendário de treinos
+* [ ] Execução do treino
+* [ ] Histórico
+* [ ] Acompanhamento de evolução
+
+### Futuro
+
+* [ ] Integração com recursos de inteligência artificial
+* [ ] Recomendações personalizadas
+* [ ] Aplicação mobile
+* [ ] Melhorias de observabilidade
+* [ ] Deploy da aplicação
+
+---
+
+## 📌 Status do projeto
+
+**Em desenvolvimento 🚧**
+
+O projeto está sendo construído de forma incremental, com foco em aprendizado, organização de código, testes e boas práticas de desenvolvimento.
+
+---
+
+## 👨‍💻 Autor
+
+**Jhonatha Oliveira**
+
+Desenvolvedor em formação com foco em desenvolvimento Full Stack JavaScript/TypeScript.
+
+GitHub: [Bfr-Jhon](https://github.com/Bfr-Jhon)
