@@ -7,6 +7,8 @@ describe('UsersService', () => {
 
   const userRepository = {
     find: vi.fn(),
+    create: vi.fn(),
+    save: vi.fn(),
   };
 
   beforeEach(() => {
@@ -47,4 +49,27 @@ describe('UsersService', () => {
     expect(result).toEqual([]);
     expect(userRepository.find).toHaveBeenCalledTimes(1);
   });
+
+  it('deve criar um Usuario', async () => {
+    const user: User = {
+        id: 1,
+        name: 'Jhon',
+        email: 'jhon@example.com',
+        passwordHash: 'hash',
+        birthDate: new Date('2001-09-21'),
+        height: 171,
+    }
+   
+    userRepository.create.mockReturnValue(user);
+    userRepository.save.mockResolvedValue(user);
+
+    const result = await usersService.createUser(user);
+      expect(result).toEqual(user);
+      
+      // verifica se de fato o service chamou
+      expect(userRepository.create).toHaveBeenCalledTimes(1);
+      expect(userRepository.save).toHaveBeenCalledTimes(1);
+
+  });
+
 });
